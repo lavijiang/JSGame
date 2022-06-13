@@ -22,11 +22,13 @@ randChoice = function(arr){
 class Game{
     constructor(){
         this.data = [];
+        this.points = 0;
         this.initializeData();
     }
 
     initializeData(){
         this.data = [];
+        this.points = 0;
         for(let i = 0;i<GAME_SIZE;i++){
             let tmp = [];
             for(let j = 0;j<GAME_SIZE;j++){
@@ -106,6 +108,7 @@ class Game{
                 for(let move of result.moves){
                     moves.push([[i,move[0]],[i,move[1]]]);
                 }
+                this.points += result.points;
             }
         }else if(command == "u" || command == "d"){
             for(let j = 0;j<GAME_SIZE;j++){
@@ -123,12 +126,16 @@ class Game{
                 for(let i = 0;i<GAME_SIZE;i++){
                     this.data[i][j] = tmp[i];
                 }
+                this.points += result.points;
             }
         }
         if(moves.length != 0){
             this.generateNewBlock();
         }
-        return moves;
+        return {
+            "moves": moves,
+            "points": this.points
+        };
     } 
 }
 
@@ -279,23 +286,25 @@ class View {
 
 // controller
 var container = document.getElementById("game-container");
+var pointsContainer = document.getElementById("points");
 var game = new Game();
 var view = new View(game,container);
 view.drawGame();
 
 document.onkeydown = function(event){
-    let moves = null;
+    let result = null;
     if(event.key == "ArrowLeft"){
-        moves = game.advance("l");
+        result = game.advance("l");
     }else if(event.key == "ArrowRight"){
-        moves = game.advance("r");
+        result = game.advance("r");
     }else if(event.key == "ArrowUp"){
-        moves = game.advance("u");
+        result = game.advance("u");
     }else if(event.key == "ArrowDown"){
-        moves = game.advance("d");
+        result = game.advance("d");
     }
-    if(moves != null && moves.length > 0){
-        //console.log(moves);
-        view.animate(moves);
+    if(result && result.moves.length > 0){
+        //console.log(game.points);
+        pointsContainer.innerHTML = `Points: ${game.points}`;
+        view.animate(result.moves);
     }
 }
