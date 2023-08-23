@@ -46,6 +46,19 @@ const nextButton = document.getElementById('nextButton');
 const scoreForm = document.getElementById('scoreForm');
 const scoreList = document.getElementById('scoreList');
 
+function assignScore() {
+    if (currentQuestionIndex < questions.length) {
+        document.querySelectorAll('input[type="radio"]').forEach(input => {
+            if (input.checked) {
+                questions[currentQuestionIndex].score = parseInt(input.value);
+                console.log(currentQuestionIndex);
+                console.log(questionText.textContent);
+                console.log(questions[currentQuestionIndex].score);
+            }
+        });
+    }
+}
+
 function showQuestion() {
     if (currentQuestionIndex < questions.length) {
         const currentQuestion = questions[currentQuestionIndex];
@@ -53,18 +66,7 @@ function showQuestion() {
         questionText.appendChild(document.createElement('br'));
         questionText.appendChild(document.createElement('br'));
         questionText.appendChild(document.createTextNode('请选择：'));
-        document.querySelectorAll('input[type="radio"]').forEach(input => {
-            if (input.checked) {
-                questions[currentQuestionIndex].score = parseInt(input.value);
-                console.log(currentQuestionIndex);
-                console.log(questions[currentQuestionIndex].score);
-            }
-            // input.addEventListener('click', event => {
-            //     questions[currentQuestionIndex].score = parseInt(event.target.value);
-            //     console.log(currentQuestionIndex);
-            //     console.log(questions[currentQuestionIndex].score);
-            // });
-        });
+
         nextButton.style.display = 'block';
         scoreForm.style.display = 'none';
         questionText.style.display = 'block';
@@ -124,8 +126,9 @@ function showScores() {
 }
 
 nextButton.addEventListener('click', () => {
-    showQuestion();
+    assignScore()
     currentQuestionIndex++;
+    showQuestion();
 });
 
 showQuestion();
