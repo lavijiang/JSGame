@@ -1,0 +1,26 @@
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDP性格测试</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>PDP性格测试</h1>
+    <h2>您共需要回答30个问题</h2>
+    <div id="question">
+        <p id="questionText"></p>
+        <input type="radio" name="answer" value="1"> 不同意
+        <input type="radio" name="answer" value="2"> 勉强同意
+        <input type="radio" name="answer" value="3"> 同意
+        <input type="radio" name="answer" value="4"> 较同意
+        <input type="radio" name="answer" value="5"> 非常同意
+    </div>
+    <form id="scoreForm" style="display: none;">
+        <h2>得分汇总：</h2>
+        <ul id="scoreList"></ul>
+    </form>
+    <button id="nextButton">下一题</button>
+    <script src="./index.js"></script>
+</body>
+</html>
